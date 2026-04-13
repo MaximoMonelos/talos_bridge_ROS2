@@ -1,0 +1,20 @@
+# Goal
+string  wheel_id
+float32 target_deg          # grados objetivo
+float32 tolerance_deg       # margen para "llegado" (default 2.0)
+float32 timeout_sec         # 0.0 = sin timeout
+
+---
+# Result
+bool    success
+float32 final_position_deg
+float32 error_deg
+string  stop_reason         # "completed" | "canceled" | "timeout" | "estop"
+
+---
+# Feedback
+float32 current_position_deg
+float32 setpoint_deg
+float32 error_deg
+float32 pid_output
+bool    goal_reached

@@ -1,0 +1,18 @@
+# Goal
+string  wheel_id
+float32 target_rpm
+float32 duration_sec
+float32 rpm_tolerance
+---
+# Result
+bool    success
+float32 average_rpm
+float32 duration_actual
+string  stop_reason
+---
+# Feedback
+float32 current_rpm
+float32 setpoint_rpm
+float32 error_rpm
+float32 pid_output
+bool    setpoint_reached

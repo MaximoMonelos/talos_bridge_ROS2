@@ -1,0 +1,25 @@
+# --- ROS 2 Specific ---
+build/
+install/
+log/
+
+# --- Colcon & Ament Control Files ---
+COLCON_IGNORE
+AMENT_IGNORE
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Compiled Artifacts ---
+*.so
+*.o
+*.a

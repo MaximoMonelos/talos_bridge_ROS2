@@ -1,0 +1,8 @@
+string                    wheel_id
+robot_interfaces/PIDGains gains
+bool                      reset_integrator
+
+---
+bool                      success
+string                    message
+robot_interfaces/PIDGains gains_applied
