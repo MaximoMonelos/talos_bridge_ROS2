@@ -1,0 +1,31 @@
+# config.yaml
+
+/motor_topic_node: # Reemplaza con el nombre de tu nodo
+  ros__parameters:
+    
+    # --- Configuración de Nodos ---
+    # Si este archivo configura a otros sub-nodos o procesos
+    #node_names:
+
+    # --- Configuración de Topics ---
+    topics:
+      publishers:
+        status: "motor/status"
+      #subscribers:
+
+
+    # --- Configuración de Servicios ---
+    #services:
+      #clients:
+
+      #servers:
+
+    # --- Configuración de Acciones ---
+    #actions:
+      #navigate_to: "/nav2/navigate_to_pose"
+     # docking: "/robot/auto_dock"
+
+    # --- Otros Parámetros Generales ---
+    publish_frequency: 10.0
+    use_sim_time: false
+    log_level: "info"
