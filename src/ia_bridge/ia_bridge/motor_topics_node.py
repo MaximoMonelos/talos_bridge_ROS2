@@ -1,4 +1,5 @@
 import rclpy
+from rclpy.logging import LoggingSeverity
 from rclpy.node import Node
 
 from robot_interfaces.msg import WheelPositionState
@@ -8,6 +9,7 @@ class TopicsNode(Node):
     def __init__(self):
         super().__init__("motor_topic_node")
 
+        self.get_logger().set_level(LoggingSeverity.DEBUG)
         # 1. DECLARAR EL PARÁMETRO
         # El primer argumento es la ruta exacta dentro del YAML.
         # El segundo argumento es el valor por defecto en caso de que el YAML no se cargue.
@@ -24,6 +26,16 @@ class TopicsNode(Node):
         )
         # 3. USAR EL VALOR PARA CREAR EL PUBLICADOR
         self.pub = self.create_publisher(WheelPositionState, topic_name, 10)
+
+        if frequency <= 0:
+            self.get_logger().fatal(
+                f"Frecuencia de publicación inválida: {frequency}Hz. Debe ser > 0."
+            )
+            raise ValueError("Frecuencia inválida")
+
+        self.get_logger().debug(
+            f"Configuración cargada - Tópico: {topic_name}, Frecuencia: {frequency}Hz"
+        )
 
         self.timer = self.create_timer((1 / frequency), self.timer_callback)
 
@@ -42,6 +54,7 @@ class TopicsNode(Node):
         msg.position_deg = self.fake_position
 
         self.pub.publish(msg)
+        self.get_logger().debug(f"Publicada posición simulada: {msg.position_deg:.2f}°")
 
 
 def main(args=None):

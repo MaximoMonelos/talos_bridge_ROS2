@@ -1,4 +1,5 @@
 import rclpy
+from rclpy.logging import LoggingSeverity
 from rclpy.node import Node
 
 # ¡Importamos tu servicio!
@@ -8,6 +9,7 @@ from robot_interfaces.srv import SetWheelPosition
 class PositionServiceMock(Node):
     def __init__(self):
         super().__init__("position_service_mock")
+        self.get_logger().set_level(LoggingSeverity.DEBUG)
 
         self.srv = self.create_service(
             SetWheelPosition, "talos/set_wheel_position", self.set_position_callback
@@ -27,6 +29,14 @@ class PositionServiceMock(Node):
         self.get_logger().info(
             f'¡Orden recibida! Moviendo rueda "{rueda}" a {posicion_deseada} grados.'
         )
+        self.get_logger().debug(
+            f"Procesando petición para {rueda} a {posicion_deseada}°..."
+        )
+
+        if posicion_deseada > 360.0:
+            self.get_logger().warning(
+                f"Posición {posicion_deseada}° fuera de rango normal. Se procesará igualmente en el mock."
+            )
 
         # 2. Acá iría la comunicación real con tu micro
         # En el futuro, acá empaquetarías los bytes por serial hacia la Pico.
