@@ -28,7 +28,7 @@ setup(
     entry_points={
         'console_scripts': [
             'mock_position = talos_bridge.mock_position:main',
-            'mock_service = talos_bridge.mock_service:main'
+            'mock_service = talos_bridge.mock_service:main',
         ],
     },
 )

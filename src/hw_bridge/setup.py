@@ -26,6 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
             'uart_driver_node = hw_bridge.uart_driver:main',
+            'protocol_handler_node = hw_bridge.protocol_handler_node:main'
         ],
     },
 )

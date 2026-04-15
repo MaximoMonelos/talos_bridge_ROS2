@@ -14,6 +14,8 @@ class UartDriverNode(Node):
         self.port = "/dev/ttyACM0"
         self.baudrate = 115200
 
+        self.sub_to_pico = self.create_subscription(String, "tx_raw_data", self.write_serial_callback, 10)
+
         self.pub = self.create_publisher(String, "uart/read", 10)
 
         try:
@@ -55,12 +57,22 @@ class UartDriverNode(Node):
                     )
 
             except UnicodeDecodeError:
-                self.get_logger().warn(
-                    "Se recibió basura en el puerto serial (Error de decodificación)."
-                )
-            except Exception as e:
-                self.get_logger().debug(f"→ Excepción leyendo serial: {e}")
-                self.get_logger().error(f"Error inesperado leyendo serial: {e}")
+                self.get_logger().warn("Se recibió basura en el puerto serial (Error de decodificación).")
+
+    def write_serial_callback(self, msg):
+
+        if not hasattr(self, "serial_port") or not self.serial_port.is_open:
+            self.get_logger().warn("Intentando mandar un comando pero el puerto esta cerrado")
+            return 
+        try:
+            comando_bytes = msg.data.encode('utf-8')
+
+            self.serial_port.write(comando_bytes)
+
+            self.get_logger().info(f"Comando enviado a la UART: {msg.data.strip()}")
+        except Exception as e:
+            self.get_logger().error(f"Exploto la escritura en el serial: {e}")
+
 
 
 def main(args=None):
