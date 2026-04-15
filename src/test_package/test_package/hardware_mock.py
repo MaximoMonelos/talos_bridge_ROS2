@@ -18,6 +18,9 @@ class HardwareMock(Node):
         self.get_logger().info("Mock de Hardware (Pico) esperando comandos...")
 
     def callback(self, request, response):
+        self.get_logger().debug(
+            f"→ Inicio callback: wheel_id={request.wheel_id}, position={request.position_deg}°"
+        )
         self.get_logger().info(
             f"Comando recibido para rueda {request.wheel_id}: {request.position_deg} grados"
         )
@@ -28,6 +31,8 @@ class HardwareMock(Node):
         # Simulamos que todo salió bien
         response.success = True
         response.message = "ACK desde la Raspberry Pi Pico"
+
+        self.get_logger().debug(f"→ Retornando response: success={response.success}")
         return response
 
 

@@ -26,6 +26,7 @@ class PositionPublisherMock(Node):
         self.pos_simulada = 0.0
 
     def timer_callback(self):
+        self.get_logger().debug("→ Timer callback inicio")
         msg = WheelPositionState()
 
         # 1. Llenamos el Header (Marca de tiempo y marco de referencia)
@@ -50,7 +51,7 @@ class PositionPublisherMock(Node):
             self.pos_simulada = 0.0
 
         self.publisher_.publish(msg)
-        self.get_logger().debug(f"Publicando posición: {msg.position_deg} grados")
+        self.get_logger().debug(f"→ Publicando posición: {msg.position_deg} grados")
 
 
 def main(args=None):

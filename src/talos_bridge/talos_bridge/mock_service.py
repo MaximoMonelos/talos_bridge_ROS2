@@ -26,6 +26,9 @@ class PositionServiceMock(Node):
             request.position_deg
         )  # Asegurate de que esto coincida con tu .srv
 
+        self.get_logger().debug(
+            f"→ Inicio callback: wheel_id={rueda}, position={posicion_deseada}°"
+        )
         self.get_logger().info(
             f'¡Orden recibida! Moviendo rueda "{rueda}" a {posicion_deseada} grados.'
         )
@@ -51,6 +54,7 @@ class PositionServiceMock(Node):
             posicion_deseada  # Simulamos que llegó perfecto a la meta
         )
 
+        self.get_logger().debug(f"→ Respondiendo: success={response.success}, final_position={response.final_position_deg}°")
         return response
 
 

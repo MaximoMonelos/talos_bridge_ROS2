@@ -36,11 +36,14 @@ class UartDriverNode(Node):
 
         if self.serial_port.in_waiting > 0:
             raw_data_line = self.serial_port.readline()
-            self.get_logger().debug(f"Datos raw recibidos: {raw_data_line}")
+            self.get_logger().debug(
+                f"→ Datos seriales recibidos, length={len(raw_data_line)}: {raw_data_line}"
+            )
 
             try:
                 # 1. Decodificar los bytes a un string de Python y quitar espacios/saltos de línea
                 data_line_str = raw_data_line.decode("utf-8").strip()
+                self.get_logger().debug(f"→ Decodificado: '{data_line_str}'")
 
                 if data_line_str:
                     msg = String()
@@ -48,7 +51,7 @@ class UartDriverNode(Node):
 
                     self.pub.publish(msg)
                     self.get_logger().debug(
-                        f"Mensaje decodificado y publicado: {msg.data}"
+                        f"→ Publicando a tópicos: '{msg.data}'"
                     )
 
             except UnicodeDecodeError:
@@ -56,6 +59,7 @@ class UartDriverNode(Node):
                     "Se recibió basura en el puerto serial (Error de decodificación)."
                 )
             except Exception as e:
+                self.get_logger().debug(f"→ Excepción leyendo serial: {e}")
                 self.get_logger().error(f"Error inesperado leyendo serial: {e}")
 
 
