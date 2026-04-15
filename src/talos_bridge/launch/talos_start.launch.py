@@ -26,12 +26,21 @@ def generate_launch_description():
         output="screen",
     )
 
-    motor_node = Node(
-        package="test_package",
-        executable="hardware_mock",
-        name="motor_hardware",
+    motor_uart_node = Node(
+        package="hw_bridge",
+        executable="uart_driver_node",
+        name="uart_driver",
         output="screen",
     )
+
+    motor_protocol_handler = Node(
+        package="hw_bridge",
+        executable="protocol_handler_node",
+        name="protocol_handler",
+        output="screen",
+    )
+
+
 
     # Útil si estás usando herramientas basadas en TUI
     # teleop_node = Node(
@@ -44,5 +53,5 @@ def generate_launch_description():
 
     # La función debe retornar un objeto LaunchDescription con las acciones a ejecutar
     return LaunchDescription(
-        [bridge_node_motor_status, bridge_node_motor_set, brain_node, motor_node]
+        [bridge_node_motor_status, bridge_node_motor_set, brain_node, motor_uart_node, motor_protocol_handler]
     )
