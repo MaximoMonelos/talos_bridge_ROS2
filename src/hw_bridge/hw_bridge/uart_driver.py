@@ -1,5 +1,6 @@
 import rclpy
 import serial
+from rclpy.logging import LoggingSeverity
 from rclpy.node import Node
 from std_msgs.msg import String
 
@@ -7,6 +8,8 @@ from std_msgs.msg import String
 class UartDriverNode(Node):
     def __init__(self):
         super().__init__("uart_driver_node")
+
+        self.get_logger().set_level(LoggingSeverity.DEBUG)
 
         self.port = "/dev/ttyACM0"
         self.baudrate = 115200
@@ -23,7 +26,7 @@ class UartDriverNode(Node):
                 f"Éxito: Puerto {self.port} abierto a {self.baudrate} bps."
             )
         except serial.SerialException as e:
-            self.get_logger().error(f"Fallo fatal al abrir el puerto: {e}")
+            self.get_logger().fatal(f"Fallo fatal al abrir el puerto: {e}")
             return
 
         self.timer = self.create_timer(0.001, self.read_serial_data)
@@ -35,17 +38,23 @@ class UartDriverNode(Node):
 
         if self.serial_port.in_waiting > 0:
             raw_data_line = self.serial_port.readline()
+            self.get_logger().debug(
+                f"→ Datos seriales recibidos, length={len(raw_data_line)}: {raw_data_line}"
+            )
 
             try:
                 # 1. Decodificar los bytes a un string de Python y quitar espacios/saltos de línea
                 data_line_str = raw_data_line.decode("utf-8").strip()
+                self.get_logger().debug(f"→ Decodificado: '{data_line_str}'")
 
-                if data_line_str: 
+                if data_line_str:
                     msg = String()
                     msg.data = data_line_str
-                        
+
                     self.pub.publish(msg)
-                # self.get_logger().info(f"Recibido: {msg.data}") # Descomentar para debug
+                    self.get_logger().debug(
+                        f"→ Publicando a tópicos: '{msg.data}'"
+                    )
 
             except UnicodeDecodeError:
                 self.get_logger().warn("Se recibió basura en el puerto serial (Error de decodificación).")

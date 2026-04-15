@@ -1,4 +1,5 @@
 import rclpy
+from rclpy.logging import LoggingSeverity
 from rclpy.node import Node
 
 # Importamos TU mensaje compilado
@@ -9,6 +10,7 @@ class PositionPublisherMock(Node):
     def __init__(self):
         super().__init__("position_publisher_mock")
 
+        self.get_logger().set_level(LoggingSeverity.DEBUG)
         # Creamos el publicador
         self.publisher_ = self.create_publisher(
             WheelPositionState, "/talos/rueda_delantera_izq/posicion", 10
@@ -24,6 +26,7 @@ class PositionPublisherMock(Node):
         self.pos_simulada = 0.0
 
     def timer_callback(self):
+        self.get_logger().debug("→ Timer callback inicio")
         msg = WheelPositionState()
 
         # 1. Llenamos el Header (Marca de tiempo y marco de referencia)
@@ -48,7 +51,7 @@ class PositionPublisherMock(Node):
             self.pos_simulada = 0.0
 
         self.publisher_.publish(msg)
-        self.get_logger().info(f"Publicando posición: {msg.position_deg} grados")
+        self.get_logger().debug(f"→ Publicando posición: {msg.position_deg} grados")
 
 
 def main(args=None):

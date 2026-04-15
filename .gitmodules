@@ -1,0 +1,3 @@
+[submodule "src/talos_autonomous_brain"]
+	path = src/talos_autonomous_brain
+	url = git@github.com:FrancoLopez0/talos_autonomous_brain.git
