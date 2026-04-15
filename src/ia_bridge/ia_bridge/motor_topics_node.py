@@ -13,7 +13,7 @@ class TopicsNode(Node):
         # 1. DECLARAR EL PARÁMETRO
         # El primer argumento es la ruta exacta dentro del YAML.
         # El segundo argumento es el valor por defecto en caso de que el YAML no se cargue.
-        self.declare_parameter("topics.publishers.status", "motor/position_state")
+        self.declare_parameter("topics.publishers.status", "motor/status")
         self.declare_parameter("publish_frequency", 10.0)  # Frecuencia en Hz
 
         topic_name = (
@@ -49,7 +49,8 @@ class TopicsNode(Node):
 
         msg.header.stamp = self.get_clock().now().to_msg()
 
-        self.fake_position += 0.01
+        # self.fake_position += 0.01
+        self.fake_position = 60.0
 
         msg.position_deg = self.fake_position
 
