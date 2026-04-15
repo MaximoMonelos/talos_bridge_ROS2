@@ -55,7 +55,7 @@ class TopicsNode(Node):
         msg.position_deg = self.fake_position
 
         self.pub.publish(msg)
-        self.get_logger().debug(f"Publicada posición simulada: {msg.position_deg:.2f}°")
+        # self.get_logger().debug(f"Publicada posición simulada: {msg.position_deg:.2f}°")
 
 
 def main(args=None):

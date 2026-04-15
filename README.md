@@ -74,5 +74,11 @@ Para probar la comunicación simulada:
     ros2 service call /talos/set_wheel_position robot_interfaces/srv/SetWheelPosition "{wheel_id: 'rueda_delantera_izq', position_deg: 90.0}"
     ```
 
+Para ejecutar el proyecto:
+
+```bash
+ros2 launch talos_bridge talos_start.launch.py
+```
+
 ---
 **Desarrollado para la integración de IA y Robótica.**

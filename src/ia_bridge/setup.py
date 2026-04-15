@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'motor_topics_node = ia_bridge.motor_topics_node:main',
+            'motor_status_node = ia_bridge.motor_topics_node:main',
             'motor_service_node = ia_bridge.motor_services_node:main',
             'motor_actions_node = ia_bridge.motor_actions_node:main',
         ],
