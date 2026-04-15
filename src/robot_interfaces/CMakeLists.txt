@@ -23,6 +23,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/WheelVelocityState.msg"
   "msg/WheelPositionState.msg"
   "msg/InternalPositionData.msg"
+  "srv/Chat.srv"
   "srv/SetWheelVelocity.srv"
   "srv/SetWheelPosition.srv"
   "srv/GetPositionPIDGains.srv"
